@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Breaking Glass tests</title>
+  <link rel="icon" href="../assets/icons/logo.svg" type="image/svg+xml">
+  <style>
+    :root { --bg: #f7f8fa; --fg: #14202b; --ok: #1d6b3a; --bad: #a3271d; --muted: #5a6672; }
+    @media (prefers-color-scheme: dark) {
+      :root { --bg: #11181f; --fg: #e6edf3; --ok: #6fd391; --bad: #ff8f84; --muted: #9aa7b3; }
+    }
+    body { background: var(--bg); color: var(--fg); font: 18px/1.5 system-ui, sans-serif; margin: 0; padding: 16px; }
+    h1 { font-size: 1.5rem; }
+    .ok { color: var(--ok); font-weight: 700; }
+    .bad { color: var(--bad); font-weight: 700; }
+    li { margin: .25rem 0; }
+    code { color: var(--muted); }
+  </style>
+</head>
+<body>
+  <h1>Breaking Glass · test runner</h1>
+  <p id="summary" role="status">Running…</p>
+  <ul id="list"></ul>
+  <script type="module">
+    import { env, runAll } from './harness.js';
+    env.loadJSON = async (rel) => {
+      const res = await fetch('../' + rel, { cache: 'no-cache' });
+      if (!res.ok) throw new Error(`HTTP ${res.status} for ${rel}`);
+      return res.json();
+    };
+    const summary = document.getElementById('summary');
+    const list = document.getElementById('list');
+    try {
+      await import('./suites.js');
+      const { results, passed, failed, zero, ok } = await runAll();
+      summary.className = ok ? 'ok' : 'bad';
+      summary.textContent = zero
+        ? 'FAIL — zero tests discovered'
+        : `${ok ? 'PASS' : 'FAIL'} — ${passed} passed, ${failed} failed`;
+      for (const r of results.filter((x) => !x.ok)) {
+        const li = document.createElement('li');
+        li.innerHTML = `<span class="bad">✖ ${r.id}</span> <code></code>`;
+        li.querySelector('code').textContent = r.error;
+        list.append(li);
+      }
+    } catch (err) {
+      summary.className = 'bad';
+      summary.textContent = 'FAIL — test runner error: ' + err.message;
+    }
+  </script>
+</body>
+</html>

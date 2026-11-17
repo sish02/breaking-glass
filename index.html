@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Breaking Glass</title>
+  <meta name="description" content="A co-op browser game: read an OTDR trace, account for manhole slack, and send the dig crew to the fiber cut.">
+  <link rel="icon" href="assets/icons/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <a class="skip" href="#main">Skip to the game</a>
+  <header class="topbar">
+    <span class="icon icon-logo" aria-hidden="true"></span>
+    <span class="brand">Breaking Glass</span>
+    <span class="tagline">Fiber cut hunt · co-op arcade</span>
+    <button type="button" id="restart-btn" class="btn btn-quiet" hidden>Restart</button>
+  </header>
+
+  <main id="main" tabindex="-1">
+    <div id="app"><p class="loading">Loading the Albuquerque route…</p></div>
+    <section id="feedback" class="feedback" aria-live="polite" aria-label="Dispatch result"></section>
+  </main>
+
+  <dialog id="restart-dialog" aria-labelledby="restart-title">
+    <h2 id="restart-title">Restart the session?</h2>
+    <p>Progress will be cleared and you'll return to team setup.</p>
+    <div class="dialog-actions">
+      <button type="button" id="restart-cancel" class="btn" autofocus>Cancel</button>
+      <button type="button" id="restart-confirm" class="btn btn-danger">Restart</button>
+    </div>
+  </dialog>
+
+  <noscript><p class="noscript">Breaking Glass needs JavaScript. Serve the folder with <code>python3 -m http.server 8000 --bind 127.0.0.1</code> and open http://127.0.0.1:8000.</p></noscript>
+  <script type="module" src="main.js"></script>
+</body>
+</html>

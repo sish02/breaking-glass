@@ -1,0 +1,10 @@
+{
+  "name": "breaking-glass",
+  "private": true,
+  "type": "module",
+  "description": "Co-op OTDR fiber-cut locator game. No dependencies; this file only marks .js files as ES modules for the Node test runner.",
+  "scripts": {
+    "test": "node tests/run.mjs",
+    "serve": "python3 -m http.server 8000 --bind 127.0.0.1"
+  }
+}

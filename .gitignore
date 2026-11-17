@@ -1,0 +1,11 @@
+.DS_Store
+.claude/settings.local.json
+.claude/projects/
+node_modules/
+*.log
+.env*
+Thumbs.db
+*.tmp
+*.swp
+.vscode/
+.idea/

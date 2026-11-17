@@ -1,0 +1,636 @@
+{
+  "schemaVersion": 1,
+  "sources": [
+    {
+      "id": "foa-otdr",
+      "title": "The FOA Reference For Fiber Optics – OTDRs",
+      "url": "https://www.thefoa.org/tech/ref/testing/OTDR/OTDR.html",
+      "section": "How Does an OTDR Work?; Information in the OTDR Trace; Index of Refraction",
+      "claim": "An OTDR sends a pulse of light down the fiber and displays the backscattered light along the fiber's length; connectors and mechanical splices show a reflective peak; a good fusion splice's loss can be very small; the index of refraction calibrates distance."
+    },
+    {
+      "id": "foa-otdr-faq",
+      "title": "The FOA Reference For Fiber Optics – OTDR FAQs",
+      "url": "https://www.thefoa.org/tech/ref/testing/OTDR/OTDR-FAQS.html",
+      "section": "Systematic Errors; Sometimes My Traces Show Big Reflections From The End Of The Cable But Sometimes It Shows None At All; I'm Troubleshooting A Break In A Long Cable Run…",
+      "claim": "The OTDR measures the length of the fiber, not the cable; a ragged break shows practically no reflection while a clean cleave shows a large one; a break distance is corrected using records of the actual cable-plant length."
+    },
+    {
+      "id": "foa-restoration",
+      "title": "FOA Guide – Fiber Optic Network Restoration",
+      "url": "https://www.thefoa.org/tech/ref/restoration/rest.html",
+      "section": "Locating Faults; Designing For Non-Stop Operation As Well As Restoration; Mapping The Route",
+      "claim": "On long cables an OTDR is used to locate the problem by finding the end and comparing it with the documented length; OTDR distance is approximate (about ±2%); extra cable is stored in service loops; route records are needed to find the cable."
+    }
+  ],
+  "levels": [
+    {
+      "id": "L1",
+      "title": "Read the trace",
+      "learningOutcome": "LO1",
+      "briefing": {
+        "summary": "Press FIRE OTDR: a pulse of light races down the fiber and its echo comes back. The line slopes while there's glass; a spike is a connector, a small step is a splice. Where the echo stops and the line drops into noise, that's the cut.",
+        "paragraphs": [
+          "The Albuquerque fiber route is down. An OTDR at the central office sends pulses of light into the fiber and plots the light scattered back from every point along it. The horizontal axis is distance from the OTDR; the vertical axis is the returned light level.",
+          "A steadily sloping line means fiber is there. A sharp spike is a reflection, usually from a connector. A small step down with no spike is a fusion splice. Where the backscatter ends and the line falls into flat noise, the fiber ends.",
+          "If the fiber ends before the far office, that end is the break. A clean break can show a big reflection; a ragged one may show almost none. Either way, look for where the backscatter stops, not for the tallest spike.",
+          "In this level no slack is stored along the route, so the trace distance equals the distance along the street."
+        ],
+        "workedExample": "Example trace: launch at 0.000 km, connector spike at 0.800 km (MH-1), splice step at 2.200 km (MH-2), then the line drops into noise at 3.350 km. The far office is 6.000 km away, so the fiber ends early: the break is at 3.350 km, in span MH-2 → CO-Z, not at the connector.",
+        "limits": [
+          "Model value: distances are treated as exact. Real OTDR distances are only accurate to about ±2%, so crews confirm the location against records and the nearest manholes.",
+          "Each round has exactly one break."
+        ],
+        "demo": {
+          "testEnd": "A",
+          "route": {
+            "points": [
+              {
+                "id": "CO-A",
+                "kind": "co",
+                "groundM": 0
+              },
+              {
+                "id": "MH-1",
+                "kind": "manhole",
+                "groundM": 800,
+                "slackM": 0
+              },
+              {
+                "id": "MH-2",
+                "kind": "manhole",
+                "groundM": 2200,
+                "slackM": 0
+              },
+              {
+                "id": "CO-Z",
+                "kind": "co",
+                "groundM": 6000
+              }
+            ]
+          },
+          "trace": {
+            "wavelengthNm": 1550,
+            "attenuationDbPerKm": 0.2,
+            "events": [
+              {
+                "id": "e0",
+                "type": "launch",
+                "distanceM": 0,
+                "reflective": true
+              },
+              {
+                "id": "e1",
+                "type": "connector",
+                "distanceM": 800,
+                "reflective": true,
+                "lossDb": 0.5
+              },
+              {
+                "id": "e2",
+                "type": "splice",
+                "distanceM": 2200,
+                "reflective": false,
+                "lossDb": 0.1
+              },
+              {
+                "id": "e3",
+                "type": "end",
+                "distanceM": 3350,
+                "reflective": false
+              }
+            ]
+          }
+        }
+      },
+      "sourceIds": [
+        "foa-otdr",
+        "foa-otdr-faq"
+      ],
+      "rounds": [
+        {
+          "id": "L1R1",
+          "title": "A splice on the way",
+          "testEnd": "A",
+          "route": {
+            "points": [
+              {
+                "id": "CO-A",
+                "kind": "co",
+                "groundM": 0
+              },
+              {
+                "id": "MH-1",
+                "kind": "manhole",
+                "groundM": 2000,
+                "slackM": 0
+              },
+              {
+                "id": "MH-2",
+                "kind": "manhole",
+                "groundM": 5000,
+                "slackM": 0
+              },
+              {
+                "id": "MH-3",
+                "kind": "manhole",
+                "groundM": 9000,
+                "slackM": 0
+              },
+              {
+                "id": "CO-Z",
+                "kind": "co",
+                "groundM": 12000
+              }
+            ]
+          },
+          "trace": {
+            "wavelengthNm": 1550,
+            "attenuationDbPerKm": 0.2,
+            "events": [
+              {
+                "id": "e0",
+                "type": "launch",
+                "distanceM": 0,
+                "reflective": true
+              },
+              {
+                "id": "e1",
+                "type": "splice",
+                "distanceM": 5000,
+                "reflective": false,
+                "lossDb": 0.08
+              },
+              {
+                "id": "e2",
+                "type": "end",
+                "distanceM": 7400,
+                "reflective": true
+              }
+            ]
+          },
+          "hints": [
+            "Follow the trace from the left. A spike is a connector; a small step with no spike is a splice. The break is where the backscatter stops and the line drops into noise.",
+            "The small step at 5.000 km is a splice in MH-2 — the line keeps sloping after it, so there is still fiber there. The line drops into noise at 7.400 km.",
+            "7.400 km lies between MH-2 (5.000 km) and MH-3 (9.000 km). Dispatch the crew to span MH-2 → MH-3."
+          ]
+        },
+        {
+          "id": "L1R2",
+          "title": "The tallest spike",
+          "testEnd": "A",
+          "route": {
+            "points": [
+              {
+                "id": "CO-A",
+                "kind": "co",
+                "groundM": 0
+              },
+              {
+                "id": "MH-1",
+                "kind": "manhole",
+                "groundM": 1500,
+                "slackM": 0
+              },
+              {
+                "id": "MH-2",
+                "kind": "manhole",
+                "groundM": 3500,
+                "slackM": 0
+              },
+              {
+                "id": "MH-3",
+                "kind": "manhole",
+                "groundM": 6000,
+                "slackM": 0
+              },
+              {
+                "id": "CO-Z",
+                "kind": "co",
+                "groundM": 8000
+              }
+            ]
+          },
+          "trace": {
+            "wavelengthNm": 1550,
+            "attenuationDbPerKm": 0.2,
+            "events": [
+              {
+                "id": "e0",
+                "type": "launch",
+                "distanceM": 0,
+                "reflective": true
+              },
+              {
+                "id": "e1",
+                "type": "connector",
+                "distanceM": 1500,
+                "reflective": true,
+                "lossDb": 0.5
+              },
+              {
+                "id": "e2",
+                "type": "end",
+                "distanceM": 4250,
+                "reflective": false
+              }
+            ]
+          },
+          "hints": [
+            "The tallest spike is not always the break. After each event, check whether the backscatter keeps going.",
+            "The spike at 1.500 km is the connector pair in the MH-1 cabinet — backscatter continues after it. The line drops into noise, with no spike, at 4.250 km: a ragged break shows little or no reflection.",
+            "4.250 km lies between MH-2 (3.500 km) and MH-3 (6.000 km). Dispatch the crew to span MH-2 → MH-3."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "L2",
+      "title": "Mind the slack",
+      "learningOutcome": "LO2",
+      "briefing": {
+        "summary": "Crews leave spare cable coiled in manholes. The OTDR counts every metre of glass, coils included, so the cut is nearer the OTDR on the street than the trace says. Take off the coils the light has already passed.",
+        "paragraphs": [
+          "Crews leave extra cable coiled in manholes (service loops) so it can be pulled out for splicing later.",
+          "An OTDR measures the length of the glass, not the distance along the street. Every coil the light passes adds cable length without moving forward along the route.",
+          "To find the dig site, walk the route from the office where the OTDR is connected. A manhole's cable distance is its street distance plus all the slack stored in manholes before it; its own coil then adds its own slack before the cable leaves."
+        ],
+        "workedExample": "Example: MH-1 is 1.000 km down the street and stores 0.050 km of slack; MH-2 is at 2.500 km. The trace ends at 1.530 km. MH-1's coil runs from 1.000 to 1.050 km of cable, so 1.530 km is 0.480 km past MH-1 — 1.480 km along the street, in span MH-1 → MH-2.",
+        "limits": [
+          "The OTDR result in this game has already been corrected from fiber length to cable length.",
+          "Real OTDR distances are only accurate to about ±2%. In the field, crews confirm the location against records and check the nearest manholes.",
+          "The slack arithmetic is a model built from those facts (an OTDR measures fiber length; extra cable is stored in service loops). It is not a quoted rule."
+        ],
+        "demo": {
+          "testEnd": "A",
+          "route": {
+            "points": [
+              {
+                "id": "CO-A",
+                "kind": "co",
+                "groundM": 0
+              },
+              {
+                "id": "MH-1",
+                "kind": "manhole",
+                "groundM": 1000,
+                "slackM": 50
+              },
+              {
+                "id": "MH-2",
+                "kind": "manhole",
+                "groundM": 2500,
+                "slackM": 30
+              },
+              {
+                "id": "CO-Z",
+                "kind": "co",
+                "groundM": 4000
+              }
+            ]
+          },
+          "trace": {
+            "wavelengthNm": 1550,
+            "attenuationDbPerKm": 0.2,
+            "events": [
+              {
+                "id": "e0",
+                "type": "launch",
+                "distanceM": 0,
+                "reflective": true
+              },
+              {
+                "id": "e1",
+                "type": "end",
+                "distanceM": 1530,
+                "reflective": true
+              }
+            ]
+          }
+        }
+      },
+      "sourceIds": [
+        "foa-otdr-faq",
+        "foa-restoration"
+      ],
+      "rounds": [
+        {
+          "id": "L2R1",
+          "title": "Three manholes, three coils",
+          "testEnd": "A",
+          "route": {
+            "points": [
+              {
+                "id": "CO-A",
+                "kind": "co",
+                "groundM": 0
+              },
+              {
+                "id": "MH-1",
+                "kind": "manhole",
+                "groundM": 1000,
+                "slackM": 50
+              },
+              {
+                "id": "MH-2",
+                "kind": "manhole",
+                "groundM": 2000,
+                "slackM": 50
+              },
+              {
+                "id": "MH-3",
+                "kind": "manhole",
+                "groundM": 3000,
+                "slackM": 50
+              },
+              {
+                "id": "CO-Z",
+                "kind": "co",
+                "groundM": 4000
+              }
+            ]
+          },
+          "trace": {
+            "wavelengthNm": 1550,
+            "attenuationDbPerKm": 0.2,
+            "events": [
+              {
+                "id": "e0",
+                "type": "launch",
+                "distanceM": 0,
+                "reflective": true
+              },
+              {
+                "id": "e1",
+                "type": "end",
+                "distanceM": 3060,
+                "reflective": false
+              }
+            ]
+          },
+          "hints": [
+            "OTDR distance is cable length. Add up the slack stored in each manhole the cable passes before you compare with street distances.",
+            "MH-1 and MH-2 each store 0.050 km, so the cable reaches MH-3 at 3.000 + 0.100 = 3.100 km.",
+            "3.060 km is between MH-2 (the cable leaves its coil at 2.100 km) and MH-3 (3.100 km). Dispatch to span MH-2 → MH-3, 40 m short of MH-3."
+          ]
+        },
+        {
+          "id": "L2R2",
+          "title": "Uneven coils",
+          "testEnd": "A",
+          "route": {
+            "points": [
+              {
+                "id": "CO-A",
+                "kind": "co",
+                "groundM": 0
+              },
+              {
+                "id": "MH-1",
+                "kind": "manhole",
+                "groundM": 800,
+                "slackM": 30
+              },
+              {
+                "id": "MH-2",
+                "kind": "manhole",
+                "groundM": 1900,
+                "slackM": 100
+              },
+              {
+                "id": "MH-3",
+                "kind": "manhole",
+                "groundM": 2600,
+                "slackM": 30
+              },
+              {
+                "id": "MH-4",
+                "kind": "manhole",
+                "groundM": 3700,
+                "slackM": 100
+              },
+              {
+                "id": "CO-Z",
+                "kind": "co",
+                "groundM": 5000
+              }
+            ]
+          },
+          "trace": {
+            "wavelengthNm": 1550,
+            "attenuationDbPerKm": 0.2,
+            "events": [
+              {
+                "id": "e0",
+                "type": "launch",
+                "distanceM": 0,
+                "reflective": true
+              },
+              {
+                "id": "e1",
+                "type": "end",
+                "distanceM": 2700,
+                "reflective": true
+              }
+            ]
+          },
+          "hints": [
+            "Coils are not all the same size. Keep a running total of slack as you walk from CO-A.",
+            "Slack passed before MH-3: 0.030 (MH-1) + 0.100 (MH-2) = 0.130 km, so the cable reaches MH-3 at 2.600 + 0.130 = 2.730 km. It leaves MH-2's coil at 1.900 + 0.030 + 0.100 = 2.030 km.",
+            "2.700 km is between 2.030 km (leaving MH-2) and 2.730 km (MH-3). Dispatch to span MH-2 → MH-3, 30 m short of MH-3."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "L3",
+      "title": "Edge cases",
+      "learningOutcome": "LO3",
+      "briefing": {
+        "summary": "Two traps. If the cut falls inside a manhole's coil, dig at that manhole. And check which office the OTDR is plugged into, then measure from there.",
+        "paragraphs": [
+          "If the break distance falls inside a manhole's coil — between the cable distance where the cable enters the manhole and where it leaves — the damage is in the manhole itself. Open that manhole; don't dig in a span. Only count slack the light has fully passed.",
+          "Sometimes the OTDR is connected at the far office. Then every distance on the trace is measured from that end: walk the route from CO-Z, adding slack in the order the light meets it. Always check which office the OTDR is connected to."
+        ],
+        "workedExample": "Example: the OTDR is at CO-Z and MH-2 is 0.900 km from CO-Z with 0.060 km of slack. The trace ends at 0.930 km. MH-2's coil spans 0.900–0.960 km of cable, so the break is inside MH-2's coil: open MH-2.",
+        "limits": [
+          "Real OTDR distances are only accurate to about ±2%. On long runs crews may also test from both ends; this game does not model that.",
+          "Each round has exactly one break."
+        ],
+        "demo": {
+          "testEnd": "Z",
+          "route": {
+            "points": [
+              {
+                "id": "CO-A",
+                "kind": "co",
+                "groundM": 0
+              },
+              {
+                "id": "MH-1",
+                "kind": "manhole",
+                "groundM": 1200,
+                "slackM": 0
+              },
+              {
+                "id": "MH-2",
+                "kind": "manhole",
+                "groundM": 2100,
+                "slackM": 60
+              },
+              {
+                "id": "CO-Z",
+                "kind": "co",
+                "groundM": 3000
+              }
+            ]
+          },
+          "trace": {
+            "wavelengthNm": 1550,
+            "attenuationDbPerKm": 0.2,
+            "events": [
+              {
+                "id": "e0",
+                "type": "launch",
+                "distanceM": 0,
+                "reflective": true
+              },
+              {
+                "id": "e1",
+                "type": "end",
+                "distanceM": 930,
+                "reflective": false
+              }
+            ]
+          }
+        }
+      },
+      "sourceIds": [
+        "foa-otdr-faq",
+        "foa-restoration"
+      ],
+      "rounds": [
+        {
+          "id": "L3R1",
+          "title": "Inside the coil",
+          "testEnd": "A",
+          "route": {
+            "points": [
+              {
+                "id": "CO-A",
+                "kind": "co",
+                "groundM": 0
+              },
+              {
+                "id": "MH-1",
+                "kind": "manhole",
+                "groundM": 1000,
+                "slackM": 50
+              },
+              {
+                "id": "MH-2",
+                "kind": "manhole",
+                "groundM": 2000,
+                "slackM": 50
+              },
+              {
+                "id": "MH-3",
+                "kind": "manhole",
+                "groundM": 3000,
+                "slackM": 50
+              },
+              {
+                "id": "CO-Z",
+                "kind": "co",
+                "groundM": 4000
+              }
+            ]
+          },
+          "trace": {
+            "wavelengthNm": 1550,
+            "attenuationDbPerKm": 0.2,
+            "events": [
+              {
+                "id": "e0",
+                "type": "launch",
+                "distanceM": 0,
+                "reflective": true
+              },
+              {
+                "id": "e1",
+                "type": "end",
+                "distanceM": 2075,
+                "reflective": false
+              }
+            ]
+          },
+          "hints": [
+            "Work out where the cable enters and leaves each coil. A break between those two numbers is inside that manhole.",
+            "The cable enters MH-2 at 2.000 + 0.050 = 2.050 km (after MH-1's coil) and leaves at 2.100 km.",
+            "2.075 km is inside MH-2's coil (2.050–2.100 km of cable). Dispatch to manhole MH-2."
+          ]
+        },
+        {
+          "id": "L3R2",
+          "title": "Shot from the far end",
+          "testEnd": "Z",
+          "route": {
+            "points": [
+              {
+                "id": "CO-A",
+                "kind": "co",
+                "groundM": 0
+              },
+              {
+                "id": "MH-1",
+                "kind": "manhole",
+                "groundM": 1200,
+                "slackM": 40
+              },
+              {
+                "id": "MH-2",
+                "kind": "manhole",
+                "groundM": 2500,
+                "slackM": 40
+              },
+              {
+                "id": "MH-3",
+                "kind": "manhole",
+                "groundM": 4000,
+                "slackM": 40
+              },
+              {
+                "id": "CO-Z",
+                "kind": "co",
+                "groundM": 5500
+              }
+            ]
+          },
+          "trace": {
+            "wavelengthNm": 1550,
+            "attenuationDbPerKm": 0.2,
+            "events": [
+              {
+                "id": "e0",
+                "type": "launch",
+                "distanceM": 0,
+                "reflective": true
+              },
+              {
+                "id": "e1",
+                "type": "end",
+                "distanceM": 2300,
+                "reflective": true
+              }
+            ]
+          },
+          "hints": [
+            "Check the banner: which office is the OTDR connected to? Measure from there.",
+            "From CO-Z: MH-3 is 1.500 km away and the cable leaves its coil at 1.540 km; MH-2 is 3.000 km away, reached at 3.000 + 0.040 = 3.040 km of cable.",
+            "2.300 km is between 1.540 km (leaving MH-3) and 3.040 km (MH-2). Dispatch to span MH-2 → MH-3, 0.760 km from MH-3 — 3.240 km from CO-A."
+          ]
+        }
+      ]
+    }
+  ]
+}
