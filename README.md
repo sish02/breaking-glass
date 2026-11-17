@@ -109,7 +109,7 @@ The project follows the workshop's Spec Kit workflow: **constitution → specify
 
 ## Verification
 
-**Last checked:** 2026-11-17 · macOS (Darwin 27.2) · Node 22.14 · headless Google Chrome 157.0.8103.79 · uncommitted working tree (no commit yet). Re-checked after the arcade redesign.
+**Last checked:** 2026-11-17 · macOS (Darwin 27.2) · Node 22.14 · headless Google Chrome 157.0.8103.79 · first commit `7221563` on [github.com/sish02/breaking-glass](https://github.com/sish02/breaking-glass). Re-checked after the arcade redesign.
 
 Automated tests: `node tests/run.mjs` (or `npm test`) from the repository root, or open **http://127.0.0.1:8000/tests/** while the server is running. Both report totals and failed case IDs, and treat zero discovered tests as a failure.
 
@@ -129,7 +129,7 @@ Automated tests: `node tests/run.mjs` (or `npm test`) from the repository root, 
 | Projector readability at ~3 m (SC-007) | **Not run** | |
 | Performance | **Pass** | Title screen visible about 155 ms after navigating |
 | Observed team playtest: time ≤ 15 min, ≥ 4 of 5 players explain their mistake (T044) | **Not run** | Required before "verified". Also the real test of "fun to play" |
-| Fresh checkout run instructions | **Pass (copy, before the redesign)** | Repeat with a real `git clone` after the first push |
+| Fresh checkout run instructions | **Pass** | `git clone https://github.com/sish02/breaking-glass.git` into an empty folder (commit 7221563): `node tests/run.mjs` 95 passed, 0 failed; `python3 -m http.server` served the game, data, scripts, styles, images, ARCADE.md and the test runner (all HTTP 200) |
 | Other browsers (Firefox, Safari, Edge) | **Not run** | The animations use the Web Animations API, which current versions support |
 | No console errors | **Pass** | None during the full scripted run |
 
